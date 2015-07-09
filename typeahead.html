@@ -44,7 +44,7 @@
       //'header': '<h1>test</h1>',
       'footer': template.compile('<span class="text-danger">{{query}}</span>'),
       'empty': 'no result...',
-      'suggestion': template.compile('<li><a href="#">aa{{value}}</a></li>')
+      'suggestion': template.compile('<li><a href="#">{{name}}</a></li>')
     }
   }).on('typeahead:select', function(e, obj) {
     console.log(obj)
