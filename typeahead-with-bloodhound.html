@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>仅仅测试使用typeahead</title>
+  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/style.css">
+  <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <form  method="get" role="form">
+    <div class="form-group">
+      <label for="">label</label>
+      <input type="text" class="form-control" id="test" name="test" placeholder="Input field" value="hello">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <script type="text/javascript" src="assets/handlebars.js"></script>
+  <script type="text/javascript" src="assets/typeahead/typeahead.bundle.min.js"></script>
+  <script type="text/javascript">
+
+  var engine = new Bloodhound({
+    local: [{id: 1, name: 'test'}, {id: 2, name: 'hello'}, {id: 3, name: 'world'}],
+    identify : function(obj) {return obj.id},
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    // prefetch: {
+    //   url: 'data.json',
+    //   cache: false
+    // },
+    remote: {
+      url: 'single.json?query=%QUERY&edu=%edu',
+      wildcard: '%QUERY'
+      // prepare: function(query, transport) {
+      //   console.log(query, transport)
+      //   return transport;
+      // }
+    }
+  });
+
+  // engine.add([{id: 4, name: 'fuck'}]);
+
+  $('#test').typeahead({
+    minLength: 1  //需要输入的最少字符串，默认是1
+    ,highlight: true //是否高亮默认是false
+    //,hint: false //是否显示提示，默认是true
+    //,classNames: {input: 'tt-input', hint: 'tt-hint', menu: 'tt-menu', dataset: 'tt-dataset', suggestion: 'tt-suggestion', empty: 'tt-empty', open: 'tt-open', cursor: 'tt-cursor', highlight: 'tt-highlight'}
+    // ,classNames: {
+    //   menu: 'tt-menu',
+    //   dataset: 'atwho-view-ul',
+    // }
+  }, {
+    name: 'test'
+    ,source: engine
+    // ,async: false
+    // ,display: 'name'
+    ,display: function(result) {
+      // console.log(result);
+      return result.name;
+    }
+    ,templates: {
+      'notFound': '<strong>no result...</strong>',
+      'pending': 'pending...',
+      //'header': '<h1>test</h1>',
+      'footer': Handlebars.compile('<span class="text-danger">{{query}}</span>'),
+      'empty': '<strong>no result...</strong>',
+      // 'suggestion': Handlebars.compile('<li><a href="#">{{id}}{{name}}</a></li>')
+    }
+  }).on('typeahead:select', function(e, obj) {
+    console.log(obj)
+  });
+
+  </script>
+</body>
+</html>

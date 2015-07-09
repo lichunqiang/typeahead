@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>仅仅测试使用typeahead</title>
+  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <form  method="get" role="form">
+    <div class="form-group">
+      <label for="">label</label>
+      <input type="text" class="form-control" id="test" name="test" placeholder="Input field">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <script type="text/javascript" src="assets/arttemplate.js"></script>
+  <script type="text/javascript" src="assets/typeahead/typeahead.jquery.min.js"></script>
+  <script type="text/javascript">
+  $('#test').typeahead({
+    minLength: 1  //需要输入的最少字符串，默认是1
+    ,highlight: true //是否高亮默认是false
+    //,hint: false //是否显示提示，默认是true
+    //,classNames: {input: 'tt-input', hint: 'tt-hint', menu: 'tt-menu', dataset: 'tt-dataset', suggestion: 'tt-suggestion', empty: 'tt-empty', open: 'tt-open', cursor: 'tt-cursor', highlight: 'tt-highlight'}
+    ,classNames: {
+      menu: 'dropdown open',
+      dataset: 'dropdown-menu'
+    }
+  }, {
+    name: 'test'
+    ,source: function(query, async, sync) {
+      async([{id: 1, name: 'test'}, {id: 2, name: 'hello'}, {id: 3, name: 'world'}]);
+    }
+    ,async: false
+    ,display: 'name'
+    // ,display: function(result) {
+    //   // console.log(result);
+    //   return result.name;
+    // }
+    ,templates: {
+      'notFound': 'hhahhah',
+      'pending': 'pending...',
+      //'header': '<h1>test</h1>',
+      'footer': template.compile('<span class="text-danger">{{query}}</span>'),
+      'empty': 'no result...',
+      'suggestion': template.compile('<li><a href="#">aa{{value}}</a></li>')
+    }
+  }).on('typeahead:select', function(e, obj) {
+    console.log(obj)
+  });
+
+  </script>
+</body>
+</html>

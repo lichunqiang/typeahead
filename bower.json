@@ -1,0 +1,25 @@
+{
+  "name": "typeahead",
+  "version": "0.1.0",
+  "authors": [
+    "lichunqiang <light-li@hotmail.com>"
+  ],
+  "description": "typeahead test",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "typeahead"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "typeahead.js": "~0.11.1"
+  }
+}
